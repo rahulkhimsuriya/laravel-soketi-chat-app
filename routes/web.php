@@ -37,4 +37,5 @@ Route::middleware([
 
     Route::get('/users', [UserController::class, 'index'])->name('user.index');
     Route::get('/users/{user}/chats', [UserChatController::class, 'index'])->name('user.chat.index');
+    Route::post('/users/{user}/chats', [UserChatController::class, 'store'])->name('user.chat.store');
 });

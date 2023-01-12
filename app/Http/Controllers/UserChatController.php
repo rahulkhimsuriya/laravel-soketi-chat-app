@@ -25,11 +25,26 @@ class UserChatController extends Controller
                     ->where('sender_id', '=', $user->id)
                     ->where('receiver_id', '=', Auth::id());
             })
-            ->latest()
             ->get();
 
         return Inertia::render('UserChat/Index', [
-            'chats' => $chats
+            'chats' => $chats,
+            'sender' => $user
         ]);
+    }
+
+    public function store(Request $request, User $user)
+    {
+        request()->validate([
+            'message' => ['required']
+        ]);
+
+        Chat::create([
+            'message' => $request->string('message'),
+            'sender_id' => Auth::id(),
+            'receiver_id' => $user->id
+        ]);
+
+        return redirect(route('user.chat.index', ['user' => $user]));
     }
 }

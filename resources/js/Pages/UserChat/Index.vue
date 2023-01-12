@@ -1,10 +1,25 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+import { useForm } from '@inertiajs/inertia-vue3'
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
 
-defineProps({
+const props = defineProps({
     chats: [],
+    sender: null
 });
+
+const form = useForm({
+    message: '',
+})
+
+const sendMessage = async () => {
+    form.post(`/users/${props.sender.id}/chats`)
+    form.reset()
+}
 </script>
 
 <template>
@@ -30,6 +45,20 @@ defineProps({
                         </ul>
                     </template>
 
+                    <div class="px-6 pb-4 mt-4">
+                        <form @submit.prevent="sendMessage" class="flex align-items-center">
+                            <div class="w-1/2">
+                                <TextInput id="message" v-model="form.message" type="text" class="mt-1 block w-full"
+                                    autocomplete="message" placeholder="Say something..." />
+                                <InputError :message="form.errors.message" class="mt-2" />
+                            </div>
+
+                            <PrimaryButton class="ml-2 w-32" :class="{ 'opacity-25': form.processing }"
+                                :disabled="form.processing">
+                                Send
+                            </PrimaryButton>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
