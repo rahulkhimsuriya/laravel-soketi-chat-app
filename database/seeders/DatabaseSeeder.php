@@ -17,28 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $john = User::factory()->create([
+            'name' => 'John',
+            'email' => 'john@example.com',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        $rahul = User::first();
-
-        User::query()
-            ->where('id', '!=', $rahul->id)
-            ->get()
-            ->each(function ($user) use ($rahul) {
+        User::factory(10)->create()
+            ->each(function ($user) use ($john) {
                 Chat::factory(10)
                     ->sequence(
                         [
-                            'sender_id' => $rahul->id,
+                            'sender_id' => $john->id,
                             'receiver_id' => $user->id
                         ],
                         [
                             'sender_id' => $user->id,
-                            'receiver_id' => $rahul->id
+                            'receiver_id' => $john->id
                         ]
                     )
                     ->create();
