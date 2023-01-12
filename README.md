@@ -48,6 +48,9 @@ Setup [soketi](https://docs.soketi.app/getting-started/installation/cli-installa
 PUSHER_APP_ID=app-id
 PUSHER_APP_KEY=app-key
 PUSHER_APP_SECRET=app-secret
+PUSHER_HOST=127.0.0.1
+PUSHER_PORT=6001
+PUSHER_SCHEME=http
 PUSHER_APP_CLUSTER=mt1
 ```
 
