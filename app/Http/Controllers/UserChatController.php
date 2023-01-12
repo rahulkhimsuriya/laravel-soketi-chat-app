@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewMessage;
 use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -39,11 +40,16 @@ class UserChatController extends Controller
             'message' => ['required']
         ]);
 
-        Chat::create([
+        /** @var Chat */
+        $chat = Chat::create([
             'message' => $request->string('message'),
             'sender_id' => Auth::id(),
             'receiver_id' => $user->id
         ]);
+
+        $chat->load('sender');
+
+        broadcast(new NewMessage($chat));
 
         return redirect(route('user.chat.index', ['user' => $user]));
     }

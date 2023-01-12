@@ -2,15 +2,22 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/inertia-vue3'
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { onMounted,reactive,computed } from 'vue';
+import { usePage } from '@inertiajs/inertia-vue3'
+import { Pusher } from '@/pusher'
 
 const props = defineProps({
     chats: [],
     sender: null
 });
+
+const authUser = computed(() => usePage().props.value.user)
+
+const state = reactive({
+    chats: props.chats,
+})
 
 const form = useForm({
     message: '',
@@ -19,7 +26,18 @@ const form = useForm({
 const sendMessage = async () => {
     form.post(`/users/${props.sender.id}/chats`)
     form.reset()
+    window.location.reload()
 }
+
+onMounted(() => {
+    const senderId = props.sender.id
+    const receiverId = authUser.value.id
+
+    Pusher.subscribe(`chat.sender.${senderId}.receiver.${receiverId}`)
+        .bind('new-message',function ({ chat }) {
+            state.chats.push(chat)
+        })
+})
 </script>
 
 <template>
@@ -34,9 +52,9 @@ const sendMessage = async () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-                    <template v-if="chats.length">
+                    <template v-if="state.chats.length">
                         <ul class="px-6 py-2">
-                            <li v-for="chat in chats" :key="chat.id" class="py-1">
+                            <li v-for="chat in state.chats" :key="chat.id" class="py-1">
                                 <strong>{{ chat.sender.name }} : </strong>
                                 <span class="ml-2">
                                     {{ chat.message }}
