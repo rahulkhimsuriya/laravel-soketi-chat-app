@@ -25,9 +25,13 @@ const form = useForm({
 })
 
 const sendMessage = () => {
-    form.post(route('user.chat.store',{ user: props.sender.id }))
-    form.reset()
-    window.location.reload()
+    form.post(route('user.chat.store',{ user: props.sender.id }),{
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset()
+            window.location.reload()
+        },
+    })
 }
 
 const deleteChat = async (chatId) => {
@@ -81,17 +85,20 @@ onMounted(() => {
                     </template>
 
                     <div class="px-6 pb-4 mt-4">
-                        <form @submit.prevent="sendMessage" class="flex align-items-center">
-                            <div class="w-1/2">
-                                <TextInput id="message" v-model="form.message" type="text" class="mt-1 block w-full"
-                                    autocomplete="message" placeholder="Say something..." />
-                                <InputError :message="form.errors.message" class="mt-2" />
+                        <form @submit.prevent="sendMessage" class="">
+                            <div class="flex align-items-center">
+                                <div class="w-1/2">
+                                    <TextInput id="message" v-model="form.message" type="text" class="mt-1 block w-full"
+                                        autocomplete="message" placeholder="Say something..." />
+                                </div>
+
+                                <PrimaryButton class="ml-2 w-32" :class="{ 'opacity-25': form.processing }"
+                                    :disabled="form.processing">
+                                    Send
+                                </PrimaryButton>
                             </div>
 
-                            <PrimaryButton class="ml-2 w-32" :class="{ 'opacity-25': form.processing }"
-                                :disabled="form.processing">
-                                Send
-                            </PrimaryButton>
+                            <InputError :message="form.errors.message" class="mt-2" />
                         </form>
                     </div>
                 </div>
