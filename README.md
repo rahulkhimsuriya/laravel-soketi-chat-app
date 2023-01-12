@@ -60,6 +60,12 @@ Create an SQLite database. You can also use another database (MySQL, Postgres), 
 touch database/database.sqlite
 ```
 
+Change database connection
+
+```dotenv
+DB_CONNECTION=sqlite
+```
+
 Run database migrations and seed database:
 
 ```sh
