@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Link } from '@inertiajs/inertia-vue3'
 
 defineProps({
     users: [],
@@ -25,7 +26,9 @@ defineProps({
                             :key="users.id"
                             class="py-1"
                             >
-                                {{ user.name }}
+                                <Link :href="route('user.chat.index', { 'user': user.id })">
+                                    {{ user.name }}
+                                </Link>
                             </li>
                         </ul>
                     </template>
