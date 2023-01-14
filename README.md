@@ -34,6 +34,24 @@ Generate application key:
 php artisan key:generate
 ```
 
+Create an SQLite database. You can also use another database (MySQL, Postgres), simply update your configuration accordingly. [Read more](https://laravel.com/docs/8.x/database)
+
+```sh
+touch database/database.sqlite
+```
+
+Change database connection
+
+```dotenv
+DB_CONNECTION=sqlite
+```
+
+Run database migrations and seed database:
+
+```sh
+php artisan migrate --seed
+```
+
 Change [broadcast driver](https://laravel.com/docs/9.x/broadcasting#pusher-channels) in you `.env` file :
 
 ```dotenv
@@ -54,22 +72,10 @@ PUSHER_SCHEME=http
 PUSHER_APP_CLUSTER=mt1
 ```
 
-Create an SQLite database. You can also use another database (MySQL, Postgres), simply update your configuration accordingly. [Read more](https://laravel.com/docs/8.x/database)
+Run soketi server (if you already have soketi server running then please skip this step)
 
 ```sh
-touch database/database.sqlite
-```
-
-Change database connection
-
-```dotenv
-DB_CONNECTION=sqlite
-```
-
-Run database migrations and seed database:
-
-```sh
-php artisan migrate --seed
+npm run soketi
 ```
 
 Login credentials:
