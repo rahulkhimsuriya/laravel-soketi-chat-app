@@ -16,16 +16,7 @@ class UserChatController extends Controller
     {
         $chats = Chat::query()
             ->with(['sender'])
-            ->where(function (Builder $query) use ($user) {
-                $query
-                    ->where('sender_id', '=', Auth::id())
-                    ->where('receiver_id', '=', $user->id);
-            })
-            ->orWhere(function (Builder $query) use ($user) {
-                $query
-                    ->where('sender_id', '=', $user->id)
-                    ->where('receiver_id', '=', Auth::id());
-            })
+            ->chatHistoryFor(Auth::user(), $user)
             ->get();
 
         return Inertia::render('UserChat/Index', [
