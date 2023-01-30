@@ -18,8 +18,10 @@ class Chat extends Model
 
     protected $guarded = [];
 
-    public function scopeSendOrReceivedBy(Builder $builder, Authenticatable|User $user): Builder
-    {
+    public function scopeSendOrReceivedBy(
+        Builder $builder,
+        Authenticatable|User $user
+    ): Builder {
         return $builder
             ->where(function (Builder $query)  use ($user) {
                 return $query
@@ -32,7 +34,7 @@ class Chat extends Model
         Builder $builder,
         Authenticatable|User $sender,
         Authenticatable|User $receiver
-    ) {
+    ): Builder {
         return $builder
             ->where(function (Builder $query)  use ($receiver, $sender) {
                 return $query
