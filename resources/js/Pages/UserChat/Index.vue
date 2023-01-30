@@ -62,8 +62,9 @@ onMounted(() => {
 <template>
     <AppLayout title="Chat">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Chat
+            <h2 class="text-xl text-gray-800 leading-tight">
+                Chat with
+                <strong>{{ props.sender.name }}</strong>
             </h2>
         </template>
 
