@@ -52,7 +52,7 @@ Run database migrations and seed database:
 php artisan migrate --seed
 ```
 
-Change [broadcast driver](https://laravel.com/docs/9.x/broadcasting#pusher-channels) in you `.env` file :
+Change [broadcast driver](https://laravel.com/docs/9.x/broadcasting#pusher-channels) in your `.env` file :
 
 ```dotenv
 BROADCAST_DRIVER=pusher
