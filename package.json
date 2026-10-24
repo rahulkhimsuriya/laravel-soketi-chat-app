@@ -12,16 +12,16 @@
         "@soketi/soketi": "^1.5.0",
         "@tailwindcss/forms": "^0.5.2",
         "@tailwindcss/typography": "^0.5.2",
-        "@vitejs/plugin-vue": "^4.0.0",
+        "@vitejs/plugin-vue": "^6.0.10",
         "autoprefixer": "^10.4.7",
         "axios": "^1.1.2",
         "laravel-echo": "^1.14.2",
-        "laravel-vite-plugin": "^0.7.2",
+        "laravel-vite-plugin": "^3.2.0",
         "lodash": "^4.17.19",
         "postcss": "^8.4.14",
         "pusher-js": "^8.0.0",
         "tailwindcss": "^3.1.0",
-        "vite": "^4.0.0",
+        "vite": "^8.3.5",
         "vue": "^3.2.31"
     }
 }
